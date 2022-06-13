@@ -1,0 +1,492 @@
+Git tutorial notess from youtube.
+
+How git works
+
+	- you have a working directory
+		git add -- moving to staging area is 
+	staging area
+		git commit -- moves objects to commit history
+	commit history
+		shows a string of commits 
+	push to remote server
+		git push
+
+	git providers
+		github
+		bitbucket
+		aws codecommit
+		gitlab
+
+notes for topic:
+
+	before anything can be commited it has to go through the staging area
+	everything up to push happens on local machine
+
+	allows for individuals to have secure saves/versions of important files and collaboration 
+	across large distances
+
+Learning git the right way
+	
+	basically just stating that learning git through any sort of GUI is inccorect. 
+	git bash is recommended for windows. or cmder
+
+CMDER 
+	
+	does not seem to have any advantage over just using git bash
+
+
+
+Lesson steps
+
+confirm installation
+
+	git --version
+
+	git --help
+
+	then teach clear
+	'clear' or cntrl + L
+
+
+move into configuring git
+
+	git config --global user.name "name"
+	git config --global user.email "email"
+	git config --global color.ui auto
+
+	read through the config list via
+
+	git config 
+
+initialising git repo
+
+	cd and ls 
+	navigate to desktop 
+	mkdir learning-git
+
+	note
+	the repo is empty
+
+	git init . 
+
+	notice that ls doesnt show the .git file
+
+	ls -a 
+
+	git init is not something that we would use on an existing project this is only for a brand new project 
+
+	remove the .git 
+
+	rm -rf .git
+
+	notice that git add now doesnt work
+
+	init the dir again
+
+Git add
+
+	make a couple files using Touch
+	touch index.html
+	touch index.js
+	touch main.css
+
+	git status is introduced here
+
+	notice on branch master
+
+	notice no commits et
+
+	notice the untracked files
+
+	notice the hint at the end of the statement 
+
+	git add index.html
+
+	git status 
+
+	notice that there are changes that can be commited 
+
+	remove the index from the staging point via
+
+	git rm --cached index.html (file name)
+
+	git status
+
+	explain
+
+	add two files and point out the fact that you are having to issue the command several times
+
+	git status
+
+	git add . 
+
+	then go for a git status 
+
+	point out the fact that this will add everything that is changed in the current dir
+
+	you can do this for removing items out of the staging area with 
+
+	git rm -r --cached 
+	note -- without the -r it can not remove everything recursively 
+
+	git status
+
+	git add . 
+
+	git status
+
+	git rm -r --cached
+
+
+	making a new dir
+
+	mkdir test
+	cd test
+
+	touch test.js
+
+	git status and note the changed that have occured with .../index.html for the files in cd.. dir
+
+	then use 
+	git add .
+
+	to prove the fact that the . will only work on the level of the dir that you are currently on 
+
+	git add -A
+
+	this will add everything that is untracked no matter the level of the dir that you are currently on. note that this will not go outside of the git init root dir.
+
+	recommendation is to use git add . in order to make sure that you are working with files intentionally 
+
+
+git commits 
+
+	cd ..  introduced in order to move up a level with in the dir structure
+
+	git status 
+
+	notice the difference 
+
+	git commit -m "bootstrap project "
+
+	git log 
+
+	note allows us to see the log of commits 
+	author date and hash
+
+	to look into specific changes you can pull the commit hash string and insert it into 
+
+	git show b81a54a09c6e3f2f7d571a03b81b2947c35ed9a1
+
+	you will be able to see all the same info as git log BUT 
+	you will get to see exactly what is different
+
+
+modifying individual files from gitbash
+
+	vi index id
+	i
+	console.log("hello git");
+	esc : wq enter
+	cat index.js
+
+	will get you changes
+
+	git status is now saying modified not untracked
+
+	git diff 
+
+	will show you the exact changes that were made between what is currently in the dir and what you are about to add.
+
+	git add . 
+	git status
+
+	git commit -m "added console.log"
+
+	git log will now show you 2 commits
+
+
+showing how to restore
+
+	vi index.js 
+	i
+	delete everything
+	esc : wq
+	git diff
+	git status
+
+	to discard changes
+
+	git restore index.js	
+
+amend a message
+
+	cd learning-git
+	ls
+	vi main.css
+	i
+	body {
+
+	}
+	git add . 
+	git commit -m "junk message"
+
+	git log 
+
+	notice the message that doesnt really explain anything
+
+
+	git commit --amend -m "added body{} in main.css"
+
+	git log 
+
+	notice the fact that the message is now nice and descriptive.
+
+
+github
+git push
+
+	we have a version controlled log on our local computer and this is great but if anything goes wrong we are screwed. this is where github comes to play
+
+	git push takes a copy and puts that information into a remote server. 
+
+	this is now our github repo
+
+	pricing allows ou to look at a ton of different options
+
+	make a repo 
+	keep it public
+	and then copy and paste the bottom instruction of
+
+	git remote add origin url
+
+	check your branch 
+	git branch
+
+	notice that the naming conventions have changed from main to master
+
+	git branch -M main
+
+	now we have changed from master to main
+
+	notice that after this
+	git push -u origin main
+	will fail due to the fact that you have not set up the authentification needed to commit in this fashion
+	
+SSH key gen
+
+	start by going to the repo on github
+	show the settings ssh gpk keys and that there none associated with the account as of now
+
+	state that ssh keys will allow the student to push to this repo through their cli
+
+	point out the guide on gh that is located in the part of the page related to ssh on generating keys
+
+	click into generating keys.
+
+	navigate to generating a new ssh key and adding it to the ssh-sgent
+
+	install process for mac windows and linux
+
+	shows process in git bash
+
+	then go through the process that is listed in add ssh key to github docs
+
+	follow these steps for each type of computer in class. 
+
+	do a git push for the first upload with the files you have on deck
+
+	git push -u origin main
+
+	note that after the first successfull push you will not need to push with -u origin main just git push
+
+	create a new gile
+
+	vi main.go (creates a file and opens it)
+	i
+	func main() {}
+	:wq
+
+	git status
+	git add
+	git status
+	git commit -m "Created main.go with empty function"
+	git log
+	notice that this is not on github yet
+	git push
+	notice that the file is now on github
+
+pull 
+
+	add a readme to github using the github prompt on the front page of github.
+
+	add some changes to the readme
+
+	go back to terminal
+	ls 
+	git log
+
+	notice that this will not exist on the local computer
+
+	git pull
+
+	ls
+
+	git log 
+
+	notice that the readme.md is now working present and in the log. 
+
+	make changes to github main.go adding 'package main'
+	this makes the file on git valid. 
+
+
+	look at the commit log on github. Notice that there are more changes
+
+	go to terminal 
+	cat main.go 
+	notice that the changes on main.go did not transfer
+	git pull
+	cat main.go
+	notice that the changes on main.go are now present.
+
+Branches
+
+	master main and default branch is the same thing
+
+	feature-a branch is a good name for an example
+
+Working with Branches
+
+	in order to find out what branch you are in use:
+	git branch -- only lists in local
+	git branch -r -- lists all branches even the ones in the remote
+	git branch -a -- shows all branches... remote and local
+	notice the color differences
+
+	git branch name-here will make a new branch. Note that all branch names need to avoid illegal characters.
+
+	git branch -a to see the new branch
+
+	to switch branches
+
+	git checkout feature-a (name)
+
+	to move back to the previous branch 
+	git checkout -
+
+	try switching between main and the newly made branch a couple of times. 
+
+	you can always specifically move to a new branch using:
+
+	git checkout name-of-branch
+
+	move to the new branch and make a new file
+
+	vi utils.js
+
+	insert something like "/// TODO: Need to make utils."
+	esc
+	:wq
+
+	git status
+	git add .
+	git commit -m "utils.js with todo"
+
+	git log
+
+	need to write more notes on video:
+	working with branches
+
+	git checkout -b name-of-branch
+
+	creates a new branch and then switches to that branch 
+
+	to delete a branch 
+
+	git branch -d name-of=branch
+
+	to merge
+
+Amigos came on to talk about the fact that main and master are the exact same thing. 
+
+this is a good point of repetition
+
+amigos came on to talk about the typical workflow in video pull requests
+
+Git Merge
+	Git merge feature-a
+
+	this is a bad way to do this.
+
+	go to github.com
+
+	go to pull requests
+
+	create a pull request
+
+	make notes on what the request 
+
+	commit the request..
+
+	this page will show conflicts give you the chance to assign reviewers etc
+
+	if there are no conflicts and this has been approved then you can approve the merge. 
+
+	after the merge you can delete the branch if needed. 
+	- this can always be reverted if needed in the future. 
+
+	now you can look at the log on github and see what has changed. 
+
+	all the files are now in the main branch
+
+
+
+	on the computer
+	
+	go to the main branch
+	git checkout main
+
+	git log --oneline
+	
+	notice the better log system
+	notice the log is behind github/remote server
+	
+	git pull
+	use git log --oneline
+
+	notice the log is now the same
+	note you can now delete the branch.
+
+	git branch -d branchname
+	git branch -a
+
+	notice that the branch is gone and has moved to remote storage/archive.
+
+
+
+
+Rebase
+
+	what is it
+
+	really should be checking out from main branch when working on a branch
+
+	rebase gets rid of your changes grabs all of the changes from the master and then tries to re apply all of your changes to the master in order to get your master up to date.
+
+	git pull -r origin main
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
